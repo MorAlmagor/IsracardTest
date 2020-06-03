@@ -1,0 +1,1 @@
+export const backGroundPrimeryColor = '#1a1818';
