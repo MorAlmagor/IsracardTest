@@ -1,13 +1,18 @@
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { Provider } from 'react-redux';
+import React from 'react';
+
+import { initializeFirebase } from './src/utilities/firebase';
 import MovieScreen from "./src/screens/MovieScreen";
 import LoginScreen from "./src/screens/LoginScreen";
 import DashboardScreen from "./src/screens/DashboardScreen";
 import MostPopularMovies from "./src/screens/MostPopularMovies";
 import FavoritesScreen from "./src/screens/FavoritesScreen";
 import { store } from './src/store/storeMenu';
-import { Provider } from 'react-redux';
-import React from 'react';
+
+// Initialize firebase
+initializeFirebase();
 
 const navigator = createStackNavigator(
   {
@@ -27,8 +32,6 @@ const navigator = createStackNavigator(
     }
   }
 );
-
-
 
 const App = createAppContainer(navigator);
 export default () => {

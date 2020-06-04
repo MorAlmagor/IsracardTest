@@ -1,7 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet, Image, Button } from "react-native";
 
+import * as firebase from 'firebase';
+
+import * as firebaseUtils from '../utilities/firebase';
+
+const checkIfLoggedIn = () => {
+  firebase.auth().onAuthStateChanged((result) => {
+    const userData = result.providerData[0];
+    console.log('hello', userData.email);
+  });
+};
+
 const LoginScreen = ({ navigation }) => {
+  useEffect(() => {
+    checkIfLoggedIn();
+  }, []);
+
+  const handleSignInWithGoogle = () => {
+    firebaseUtils.signInWithGoogle();
+  };
+
   return (
     <View style={{ backgroundColor: '#1a1818', width: '100%', height: '100%', paddingTop: 50 }}>
       <View style={styles.header}>
@@ -27,7 +46,7 @@ const LoginScreen = ({ navigation }) => {
           </View>
           <View style={styles.flex2} >
             <Button
-              onPress={() => navigation.navigate('MostPopular')}
+              onPress={() => handleSignInWithGoogle()}
               title="Sign in with Google+"
               color='#C94131'
               accessibilityLabel="Learn more about this purple button"
@@ -37,10 +56,7 @@ const LoginScreen = ({ navigation }) => {
       </View>
     </View>
   )
-
 };
-
-
 
 const styles = StyleSheet.create({
   hellowText: {
@@ -77,12 +93,8 @@ const styles = StyleSheet.create({
     width: 190,
     height: 190,
     marginTop: 80
-
   }
-
 });
-
-
 
 export default LoginScreen;
 
